@@ -7,11 +7,27 @@ header{
     color:white;
 }
 header h1{
-    font-size:26px;
+    font-size: 28px;
     opacity:1;
     margin-left: 20px;
     float:left;
     line-height: 80px;
     margin-top: 0;
     margin-bottom:0;
+}
+.error{
+    background-color: rgb(223, 50, 84);
+    color: white;
+    width: 30%;
+    margin: 0 auto;
+}
+.center{
+    text-align: center;
+}
+.btn{
+    height: 30px;
+    background-color: blue;
+    width :200px;
+    color:white;
+    border:none; 
 }

@@ -1,40 +1,14 @@
 <?php
-/**
-* DB接続を行いPDOインスタンスを返す
-* 
-* @return object $pdo 
-*/
-function get_connection() {
-  try{
-    // PDOインスタンスの生成
-   $pdo = new PDO(dsn, login_user, password);
-  } catch (PDOException $e) {
-    echo $e->getMessage();
-    exit();
-  }
-
-  return $pdo;
-}
- 
-/**
-* SQL文を実行・結果を配列で取得する
-*
-* @param object $pdo
-* @param string $sql 実行されるSQL文章
-* @return array 結果セットの配列
-*/
-function get_sql_result($pdo, $sql) {
-  $data = [];
-  if ($result = $pdo->query($sql)) {
-    if ($result->rowCount() > 0) {
-      while ($row = $result->fetch()) {
-        $data[] = $row;
-      }
-    }
-  }
-  return $data;
-}
+require_once 'ECsight_common_model.php';
 
 function get_user_list($pdo,$user_name,$password){
-	
+  $sql    = 'select user_id, user_name,password from ec_user where user_name ='.$user_name.' and password ='.$password;
+  $result = get_sql_result($pdo,$sql);
+  if (count($result) ==0){
+    return 'none';
+  }else if($result[0]['user_id']==0){
+    return "admin";
+  }else{
+    return 'user';
+  }
 }
