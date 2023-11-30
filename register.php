@@ -11,7 +11,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['user_name']) && isset($
 	validation($name,$password);
 }
 
-if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_POST['message']) ) {
+if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['message']) ) {
     switch($_GET['message']) {
         case 'blank':
             $message = 'ユーザー名またはパスワードが入力されていません';
@@ -44,10 +44,10 @@ function validation($name,$password){
     if($name=='' || $password==''){
 		header("Location: register.php?message=blank");
 		exit();
-	}else if(count($name)>4 && !preg_match("/^[a-zA-Z0-9]+$/", $name)){
+	}else if(strlen($name)<4 || !preg_match("/^[a-zA-Z0-9]+$/", $name)){
         header("Location: register.php?message=username");
         exit();
-    }else if(count($password)>8 && !preg_match("/^[a-zA-Z0-9]+$/", $password)){
+    }else if(strlen($password)<8 || !preg_match("/^[a-zA-Z0-9]+$/", $password)){
         header("Location: register.php?message=password");
         exit();
     }else if(sameName($pdo,$name)){
@@ -55,6 +55,7 @@ function validation($name,$password){
         exit();
     }elseif(insert_user($pdo,$name,$password)){
         header("Location: register.php?message=success");
+		exit();
     }else{
         header("Location: register.php?message=failed");
     }

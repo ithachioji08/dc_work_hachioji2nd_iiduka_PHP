@@ -5,7 +5,11 @@ include "ECsight_header.php"
 ?>
 	<div class="center">
 		<h1>ログイン</h1>
-		<?php  if($message!='')?><p class="error"><?php print $message;?></p>
+		<?php  if($message!=''){?>
+			<p class="error">
+				<?php print $message;?>
+			</p>
+		<?php }?>
 		<form method="post">
 			<p>ユーザー名:<input type="text" name="user_name"></p>
 			<p>パスワード:<input type="text" name="password"></p>
