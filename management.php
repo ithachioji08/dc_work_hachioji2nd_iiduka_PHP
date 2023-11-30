@@ -5,11 +5,14 @@ require_once '../../include/config/const.php';
  
 //$pdo = get_connection();
 
-if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['user_name']) && isset($_POST['password'])) {
-	$name = $_POST['user_name'];
-	$password = $_FILES['password'];
-	brankCheck($name,$password);
-	switch(get_user_list($pdo,$_POST['user_name'],$_POST['password'])){
+if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_name'])) {
+	$name   = $_POST['user_name'];
+	$price  = $_POST['price'];
+	$count  = $_POST['count'];
+	$image  = $_FILES['image'];
+	$status = getStatus($_POST['status']);
+	brankCheck($name,$price,$image);
+	switch(insert_product($pdo,$name,$price,$count,$image,$status)){
 		case 'none';
 			header("Location: index.php?message=mismatch");
 			break;
@@ -36,8 +39,16 @@ if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['message'])) {
 // View(view.php）読み込み
 include_once '../../include/view/ECsight_management_view.php';
 
-function brankCheck($name,$password){
-	if($name=='' || $password==''){
+function getStatus($status){
+	if ($status == '公開'){
+		return 1;
+	}else{
+		return 0;
+	}
+}
+
+function brankCheck($name,$price,$image){
+	if($name=='' || $price=='' || $image = ''){
 		header("Location: index.php?message=blank");
 		exit();
 	}
