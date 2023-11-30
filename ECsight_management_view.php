@@ -9,7 +9,7 @@ include "ECsight_header.php"
 			<p>価格　　:<input type="text" name="price"></p>
 			<p>
 				<label for="counter">個数　　:</label>
-				<input type="number" id="counter" name="count" step="1">
+				<input type="number" id="counter" name="count" step="1" min="1">
 			</p>
 			<p>商品画像:<input type="file" name="image"></p>
 			<p>ステータス:
