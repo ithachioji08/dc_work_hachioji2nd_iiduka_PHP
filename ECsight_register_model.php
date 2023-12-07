@@ -7,6 +7,7 @@ function sameName($pdo,$name){
 }
 
 function insert_user($pdo,$name,$password){
+	$pdo->beginTransaction();
     $sql = "INSERT into ec_user(user_id,user_name,password,create_date,update_date) values(0,'".$name."','".$password."',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)";
     if(change_sql($pdo,$sql)){
         $pdo->commit();

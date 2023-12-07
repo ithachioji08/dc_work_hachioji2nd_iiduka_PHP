@@ -1,38 +1,46 @@
 <?php
 // Model（model.php）を読み込む
-//require_once '../../include/model/ECsight_management_model.php';
+require_once '../../include/model/ECsight_management_model.php';
 require_once '../../include/config/const.php';
  
-//$pdo = get_connection();
+$pdo       = get_connection();
+
+$tableData = getTable($pdo);
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_name'])) {
-	$name   = $_POST['user_name'];
+	$name   = $_POST['product_name'];
 	$price  = $_POST['price'];
 	$count  = $_POST['count'];
 	$image  = $_FILES['image'];
 	$status = getStatus($_POST['status']);
 	brankCheck($name,$price,$image);
-	switch(insert_product($pdo,$name,$price,$count,$image,$status)){
-		case 'none';
-			header("Location: index.php?message=mismatch");
-			break;
-		case 'admin':
-			header("Location: management.php");
-			break;
-		case 'user':
-			header("Location: product_list.php");
-			break;
+	$message =insert_product($pdo,$name,$price,$count,$image,$status);
+
+	if($message=='OK'){
+		header("Location: management.php?regist=success");
+	}else{
+		header("Location: management.php?regist=".$message);
 	}
 }
 
-if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['message'])) {
-	switch($_GET['message']) {
+if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['regist'])) {
+	switch($_GET['regist']) {
+		case 'success':
+			$regist_success = '商品登録に成功しました';
+			$regist_failed  = '';
+			break;
 		case 'blank':
-			$message = 'ユーザー名またはパスワードが入力されていません';
+			$regist_success = '';
+			$regist_failed  = '空白の入力欄があります';
+			break;
+		default:
+			$regist_success = '';
+			$regist_failed  = '商品登録に失敗しました';
 			break;
 	}
 }else{
-	$message = '';
+	$regist_success = '';
+	$regist_failed  = '';
 }
 
  
@@ -49,7 +57,7 @@ function getStatus($status){
 
 function brankCheck($name,$price,$image){
 	if($name=='' || $price=='' || $image = ''){
-		header("Location: index.php?message=blank");
+		header("Location: management.php?regist=blank");
 		exit();
 	}
 }

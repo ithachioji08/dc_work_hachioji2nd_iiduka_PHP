@@ -36,14 +36,14 @@ function get_sql_result($pdo, $sql) {
 }
 
 /**
-* SQL文の挿入編集を実行。結果次第でコミットないしロールバックする
+* SQL文の挿入編集を実行。
 *
 * @param object $pdo
 * @param string $sql 実行されるSQL文章
 * @return boolean 結果セットの配列
 */
 function change_sql($pdo, $sql) {
-	  $pdo->beginTransaction();
+	
     if ($pdo->query($sql)) {
       return true;
     }else {
