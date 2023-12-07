@@ -50,9 +50,9 @@ include "ECsight_header.php"
 			?>
 				<tr>
 					<td>
-						<?php $src = "../../htdocs/img/".$row['image_id'];
+						<?php $src = "../../htdocs/ec_sight/img/".$row['image_id'];
 						if (file_exists($src)) {?>
-							<img <?php print "src='/hachioji2/0001/ec_sight/img/" .$row['image_id']."'"?>>
+							<img src='/hachioji2/0001/ec_sight/img/<?php print $row['image_id']?>'>
 						<?php }else{?>
 							<div class="noimage"><p>no image</p></div>
 						<?php }?>
