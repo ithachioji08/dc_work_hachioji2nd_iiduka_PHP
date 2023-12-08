@@ -32,24 +32,30 @@ include "ECsight_header.php"
 		</form>
 		<div class="link"><a href="index.php">ログアウト</a></div>
 	</div>
-	<?php print_r($tableData) ?>
 	<table id="product_table">
 		<thead>
 			<tr>
-				<td>商品画像</td>
-				<td>商品名</td>
-				<td>価格</td>
-				<td>在庫数</td>
-				<td>公開フラグ</td>
-				<td>削除</td>
+				<td class="tableCell theadImage">商品画像</td>
+				<td class="tableCell theadProduct">商品名</td>
+				<td class="tableCell theadPrice">価格</td>
+				<td class="tableCell theadStock">在庫数</td>
+				<td class="tableCell theadFlg">公開フラグ</td>
+				<td class="tableCell theadDel">削除</td>
 			</tr>
 		</thead>
-		<tbody>
+		<form method='get'><tbody>
 			<?php
 			foreach ($tableData as $row) {
+				if($row['public_flg'] == 0){
+					$pubClass = 'unpublic';
+					$value    = '表示する';
+				}else{
+					$pubClass = '';
+					$value    = '非表示にする';
+				}
 			?>
 				<tr>
-					<td>
+					<td class="tableCell tableImage <?php print $pubClass?>">
 						<?php $src = "../../htdocs/ec_sight/img/".$row['image_id'];
 						if (file_exists($src)) {?>
 							<img src='/hachioji2/0001/ec_sight/img/<?php print $row['image_id']?>'>
@@ -57,15 +63,27 @@ include "ECsight_header.php"
 							<div class="noimage"><p>no image</p></div>
 						<?php }?>
 					</td>
-					<td><?php print $row['product_name']?></td>
-					<td><?php print $row['price']?></td>
-					<td><?php print $row['stock_qty']?></td>
-					<td><?php print $row['public_flg']?></td>
+					<td class="tableCell <?php print $pubClass?>">
+						<?php print $row['product_name']?>
+					</td>
+					<td class="tableCell <?php print $pubClass?>">
+						￥<?php print $row['price']?>
+					</td>
+					<td class="tableCell <?php print $pubClass?>">
+						<input type="number" class='stkNum' name="stock[]" value="<?php print $row['stock_qty']?>">
+						<input type='submit' value="変更する" href="mangement.php?">
+					</td>
+					<td class="tableCell <?php print $pubClass?>">
+						<input type='submit' value="<?php print $value;?>" href="mangement.php?">
+					</td>
+					<td class="tableCell <?php print $pubClass?>">
+						<input type='submit' value="削除する" href="mangement.php?">
+					</td>
 				</tr>	
 			<?php
 			}
 			?>
-		</tbody>
+		</form></tbody>
 	</table>
 </body>
 </html>

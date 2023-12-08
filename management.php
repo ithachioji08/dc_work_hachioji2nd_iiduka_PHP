@@ -43,6 +43,9 @@ if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['regist'])) {
 	$regist_failed  = '';
 }
 
+if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_name'])) {
+	
+}
  
 // View(view.php）読み込み
 include_once '../../include/view/ECsight_management_view.php';
