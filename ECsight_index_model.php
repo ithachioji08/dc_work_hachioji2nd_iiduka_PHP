@@ -9,6 +9,6 @@ function get_user_list($pdo,$user_name,$password){
   }else if($result[0]['user_id']==1){
     return "admin";
   }else{
-    return 'user';
+    return $result[0]['user_id'];
   }
 }

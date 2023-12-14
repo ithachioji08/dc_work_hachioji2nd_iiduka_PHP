@@ -5,7 +5,7 @@ include "ECsight_header.php"
 ?>
 	<div class="regist">
 		<?php  if($regist_success!=''){?>
-			<p class="sucess">
+			<p class="success">
 				<?php print $regist_success;?>
 			</p>
 		<?php }?>
@@ -31,7 +31,13 @@ include "ECsight_header.php"
 			<input type="submit" value= "商品を登録"/>
 		</form>
 		<div class="link"><a href="index.php">ログアウト</a></div>
+		<?php if($updateMessage!=''){?>
+			<p class=<?php print $updateResult; ?>>
+				<?php print $updateMessage;?>
+			</p>
+		<?php }?>
 	</div>
+	
 	<table id="product_table">
 		<thead>
 			<tr>
@@ -43,7 +49,7 @@ include "ECsight_header.php"
 				<td class="tableCell theadDel">削除</td>
 			</tr>
 		</thead>
-		<form method='get'><tbody>
+		<tbody>
 			<?php
 			foreach ($tableData as $row) {
 				if($row['public_flg'] == 0){
@@ -70,20 +76,29 @@ include "ECsight_header.php"
 						￥<?php print $row['price']?>
 					</td>
 					<td class="tableCell <?php print $pubClass?>">
-						<input type="number" class='stkNum' name="stock[]" value="<?php print $row['stock_qty']?>">
-						<input type='submit' value="変更する" href="mangement.php?">
+						<form method ="post">
+							<input type="hidden" name="stkId" value="<?php print $row['product_id'];?>">
+							<input type="number" class='stkNum' name="stock" value="<?php print $row['stock_qty']?>">
+							<input type='submit' value="変更する">
+						</form>
 					</td>
 					<td class="tableCell <?php print $pubClass?>">
-						<input type='submit' value="<?php print $value;?>" href="mangement.php?">
+						<form method ="post">
+							<input type="hidden" name="flgChange" value="<?php print $row['product_id'];?>">
+							<input type='submit' value="<?php print $value;?>">
+						</form>
 					</td>
 					<td class="tableCell <?php print $pubClass?>">
-						<input type='submit' value="削除する" href="mangement.php?">
+						<form method ="post">
+							<input type="hidden" name="delId" value="<?php print $row['product_id'];?>">
+							<input type='submit' value="削除する" href="management.php?delete=<?php print $row['product_id']?>">
+						</form>
 					</td>
 				</tr>	
 			<?php
 			}
 			?>
-		</form></tbody>
+		</tbody>
 	</table>
 </body>
 </html>
