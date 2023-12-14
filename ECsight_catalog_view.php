@@ -30,11 +30,11 @@ include "ECsight_header.php"
 				<form  method ="post">
 					<input type="hidden" name="productId" value="<?php print $row['product_id']?>">
 					<?php if(in_array($row['product_id'], $cartData)){
-						$disabled = 'disabled="disabled"';
+						$inputData = 'disabled="disabled" value="既にカートにあります"';
 					}else{
-						$disabled = '';
+						$inputData = 'value="カートに入れる"';
 					}?>
-					<input type="submit" class="inCart" <?php print $disabled?> value="カートに入れる">
+					<input type="submit" class="inCart" <?php print $inputData?> >
 				</form>
 			</div>
 			
