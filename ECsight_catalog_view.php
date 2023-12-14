@@ -29,12 +29,12 @@ include "ECsight_header.php"
 				</p>
 				<form  method ="post">
 					<input type="hidden" name="productId" value="<?php print $row['product_id']?>">
-					<?php if(in_array($row['product_id'], $cartData)){
-						$inputData = 'disabled="disabled" value="既にカートにあります"';
+					<?php if($row['stock_qty'] < 1){
+						$inputData = 'disabled="disabled" value="売り切れ"';
 					}else{
 						$inputData = 'value="カートに入れる"';
 					}?>
-					<input type="submit" class="inCart" <?php print $inputData?> >
+					<input type="submit" class="inCart" <?php print $inputData;?> >
 				</form>
 			</div>
 			

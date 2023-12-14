@@ -6,7 +6,6 @@ require_once '../../include/config/const.php';
 $pdo         = get_connection();
 
 $catalogData = getCatalog($pdo);
-$cartData    = getCart($pdo,$_COOKIE['userid']);
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['productId'])) {
 	$message = setCart($pdo,$_POST['productId'],$_COOKIE['userid']);
