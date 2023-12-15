@@ -19,23 +19,26 @@ function getCart($pdo,$id){
 }
 
 function setCart($pdo,$productId,$userId){
-	$stockSql = "SELECT stock_id from ec_cart where product_id=".$productId;
-	if(!$stock = get_sql_result($pdo,$stockSql)[0]['stock_id']){
+	$countSql = "SELECT count(1) from ec_cart where user_id=".$userId." and product_id=".$productId;
+	if(!$count = get_sql_result($pdo,$countSql)){
 		return 'select';
 	}
 
 	$pdo->beginTransaction();
-	if (count($stock) ==0){
-		$sql = "INSERT into ec_cart(cart_id,user_id,product_id,product_qty,create_date,update_date) values(0,".$userId.",".$productId.",1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)";
+	if($count[0]['count(1)'] ==0){
+		$sql          = "INSERT into ec_cart(cart_id,user_id,product_id,product_qty,create_date,update_date) values(0,".$userId.",".$productId.",1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)";
+		$errorMessage = 'insert';
 	}else{
-		$sql = "UPDATE ec_cart set product_qty = product_qty+1 where stock_id = ".$stock;
+		$sql          = "UPDATE ec_cart set product_qty = product_qty+1,update_date=CURRENT_TIMESTAMP where product_id = ".$productId." and user_id=".$userId;
+		$errorMessage = 'update';
 	}
-	
+
 	if(change_sql($pdo, $sql)){
 		$pdo->commit();
 		return 'OK';
 	}else{
 		$pdo->rollback();
-		return 'insert';
+		return $errorMessage;
 	}
+
 }
