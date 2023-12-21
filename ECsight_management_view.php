@@ -31,9 +31,9 @@ include "ECsight_header.php"
 			<input type="submit" value= "商品を登録"/>
 		</form>
 		<div class="link"><a href="index.php">ログアウト</a></div>
-		<?php if($updateMessage!=''){?>
+		<?php if($resultMessage!=''){?>
 			<p class=<?php print $updateResult; ?>>
-				<?php print $updateMessage;?>
+				<?php print $resultMessage;?>
 			</p>
 		<?php }?>
 	</div>

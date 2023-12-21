@@ -36,6 +36,14 @@ header h1{
 	padding-bottom: 50px;
 }
 
+#cart{
+	width:100%;
+	max-width: 800px;
+	margin: auto;
+	padding-top:120px;
+	padding-bottom: 50px;
+}
+
 .error{
     background-color: rgb(223, 50, 84);
     color: white;
@@ -143,6 +151,9 @@ header h1{
 	margin-bottom: 1px;
 }
 .linkForm{
+	width: 100%;
+}
+.twoLinksForm{
 	width:50%;
 }
 .cartForm{
@@ -164,4 +175,51 @@ header h1{
 .logoutButton{
 	background-color: red;
 	border:4px solid pink;
+}
+
+.cartProduct{
+	width: 100%;
+	display: flex;
+	border:1px solid gray;
+	margin-bottom: 1px;
+}
+.cartImage{
+	width: 20%;
+	object-fit: fill;
+	border: 1px solid black;
+	margin-top:1px;
+	margin-bottom:1px;
+}
+.cartName{
+	margin: auto 0;
+	width: 20%;
+}
+.cartPrice{
+	margin: auto 0;
+	width: 20%;
+}
+.cartDelete{
+	margin:auto 5px;
+}
+.cartCount{
+	margin:auto 20px auto auto;
+}
+.middle{
+	margin: auto 0;
+}
+.total{
+	width: 100%;
+	max-width: 800px;
+	display: flex;
+	margin:auto;
+}
+.bigFont{
+	font-size: 20px;
+}
+
+.rightMiddle{
+	margin:auto 0 auto auto;
+}
+.leftMiddle{
+	margin:auto auto auto 0;
 }

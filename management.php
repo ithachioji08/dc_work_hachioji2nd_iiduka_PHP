@@ -14,12 +14,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_name'])) {
 	$image   = $_FILES['image'];
 	$status  = getStatus($_POST['status']);
 	brankCheck($name,$price,$image);
-	$message = insert_product($pdo,$name,$price,$count,$image,$status);
+	$resultMessage = insert_product($pdo,$name,$price,$count,$image,$status);
 
-	if($message=='OK'){
+	if($resultMessage=='OK'){
 		header("Location: management.php?regist=success");
 	}else{
-		header("Location: management.php?regist=".$message);
+		header("Location: management.php?regist=".$resultMessage);
 	}
 }
 
@@ -44,29 +44,29 @@ if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['regist'])) {
 }
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['flgChange'])) {
-	$message = changeFlg($pdo,$_POST['flgChange']);
-	if($message=='OK'){
+	$resultMessage = changeFlg($pdo,$_POST['flgChange']);
+	if($resultMessage=='OK'){
 		header("Location: management.php?update=flgSuccess");
 	}else{
-		header("Location: management.php?update=".$message);
+		header("Location: management.php?update=".$resultMessage);
 	}
 }
  
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['stkId']) && isset($_POST['stock'])) {
-	$message = changeStk($pdo,$_POST['stkId'],$_POST['stock']);
-	if($message=='OK'){
+	$resultMessage = changeStk($pdo,$_POST['stkId'],$_POST['stock']);
+	if($resultMessage=='OK'){
 		header("Location: management.php?update=stkSuccess");
 	}else{
-		header("Location: management.php?update=".$message);
+		header("Location: management.php?update=".$resultMessage);
 	}
 }
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delId'])) {
-	$message = deletePdt($pdo,$_POST['delId']);
-	if($message=='OK'){
+	$resultMessage = deletePdt($pdo,$_POST['delId']);
+	if($resultMessage=='OK'){
 		header("Location: management.php?update=delSuccess");
 	}else{
-		header("Location: management.php?update=".$message);
+		header("Location: management.php?update=".$resultMessage);
 	}
 }
 
@@ -74,16 +74,16 @@ if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['update'])) {
 	$update = $_GET['update'];
 	switch($update){
 		case 'flgSuccess':
-			$updateMessage = '公開フラグを変更しました';
+			$resultMessage = '公開フラグを変更しました';
 			break;
 		case 'stkSuccess':
-			$updateMessage = '在庫数を変更しました';
+			$resultMessage = '在庫数を変更しました';
 			break;
 		case 'delSuccess':
-			$updateMessage = '商品を削除しました';
+			$resultMessage = '商品を削除しました';
 			break;
 		default :
-			$updateMessage = '更新に失敗しました';
+			$resultMessage = '更新に失敗しました';
 	}
 
 	if(strpos($update,'Success')){
@@ -92,7 +92,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['update'])) {
 		$updateResult = 'failed';
 	}
 }else{
-	$updateMessage = '';
+	$resultMessage = '';
 	$updateResult  = '';
 }
 

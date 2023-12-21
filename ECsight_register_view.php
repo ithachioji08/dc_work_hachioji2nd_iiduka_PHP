@@ -5,9 +5,9 @@ include "ECsight_header.php"
 ?>
 	<div class="center">
 		<h1>ユーザー登録</h1>
-		<?php  if($message!=''){?>
+		<?php  if($resultMessage!=''){?>
 			<p class="error">
-				<?php print $message;?>
+				<?php print $resultMessage;?>
 			</p>
 		<?php }?>
 		<form method="post">

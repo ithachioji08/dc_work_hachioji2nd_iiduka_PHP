@@ -4,10 +4,10 @@ $is_home = true; //トップページの判定用の変数
 include "ECsight_header.php"
 ?>
 <div class="message">
-	<?php if($insertMessage != ''){?>
+	<?php if($resultMessage != ''){?>
 		<div class="messageBox">
-			<p class=<?php print "$insertClass";?>>
-				<?php print $insertMessage;?>
+			<p class=<?php print "$class";?>>
+				<?php print $resultMessage;?>
 			</p>
 		</div>
 	<?php
@@ -42,13 +42,12 @@ include "ECsight_header.php"
 	<?php }?>
 </div>
 
-<div class="center links">
-	<form class="linkForm cartForm" action ="cart.php">
-		<input class="hrefButton cartButton" type="submit" value="カートへ" >
-	</form>
-	<form class="linkForm logoutForm" action ="index.php">
-		<input class="hrefButton logoutButton" type="submit" value="ログアウト">
-	</form>
-</div>
+<?php 
+$toCart = true;
+$action = "cart.php";
+$value  = "カートへ";
+include "ECsight_links.php"
+?>
+
 </body>
 </html>

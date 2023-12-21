@@ -14,27 +14,27 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['user_name']) && isset($
 if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['message']) ) {
     switch($_GET['message']) {
         case 'blank':
-            $message = 'ユーザー名またはパスワードが入力されていません';
+            $resultMessage = 'ユーザー名またはパスワードが入力されていません';
             break;
         case 'username':
-            $message = 'ユーザー名は、半角英数字かつ4文字以上です';
+            $resultMessage = 'ユーザー名は、半角英数字かつ4文字以上です';
             break;
         case 'password':
-            $message = 'パスワードは、半角英数字かつ8文字以上です';
+            $resultMessage = 'パスワードは、半角英数字かつ8文字以上です';
             break;
         case 'sameName':
-            $message = 'すでにそのユーザー名は使われています';
+            $resultMessage = 'すでにそのユーザー名は使われています';
             break;
         case 'success':
-            $message = '新規ユーザーを登録しました';
+            $resultMessage = '新規ユーザーを登録しました';
             break;
         case 'failed':
-            $message = '新規ユーザー登録に失敗しました';
+            $resultMessage = '新規ユーザー登録に失敗しました';
             break;
 
     }
 }else{
-    $message = '';
+    $resultMessage = '';
 }
 
 require_once '../../include/view/ECsight_register_view.php';

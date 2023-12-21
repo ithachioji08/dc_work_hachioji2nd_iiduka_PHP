@@ -3,6 +3,31 @@
 require_once '../../include/model/ECsight_index_model.php';
 require_once '../../include/config/const.php';
  
+//セッション開始
+session_start();
+if (isset($_POST["logout"])) {
+
+	// セッション名を取得する
+	$session = session_name();
+	// セッション変数を削除
+	$_SESSION = [];
+
+	// セッションID（ユーザ側のCookieに保存されている）を削除
+	if (isset($_COOKIE[$session])) {
+		// sessionに関連する設定を取得
+		$params = session_get_cookie_params();
+
+		// cookie削除
+		setcookie($session, '', time() - 30, '/');
+	}
+// ログイン中のユーザーであるかを確認する
+}elseif (!isset($_SESSION['login_id'])) {
+	// ログイン中ではない場合は、リダイレクト（転送）する
+	header('Location: work38.php');
+	exit();
+}
+
+
 $pdo = get_connection();
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['user_name']) && isset($_POST['password'])) {
@@ -27,11 +52,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['user_name']) && isset($
 if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['message'])) {
 	switch($_GET['message']) {
 		case 'blank':
-			$message = 'ユーザー名またはパスワードが入力されていません';
+			$resultMessage = 'ユーザー名またはパスワードが入力されていません';
 			break;
 	}
 }else{
-	$message = '';
+	$resultMessage = '';
 }
 
  

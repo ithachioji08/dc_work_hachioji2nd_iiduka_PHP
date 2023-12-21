@@ -8,26 +8,26 @@ $pdo         = get_connection();
 $catalogData = getCatalog($pdo);
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['productId'])) {
-	$message = setCart($pdo,$_POST['productId'],$_COOKIE['userid']);
+	$resultMessage = setCart($pdo,$_POST['productId'],$_COOKIE['userid']);
 
-	if($message=='OK'){
+	if($resultMessage=='OK'){
 		header("Location: catalog.php?insert=success");
 	}else{
-		header("Location: catalog.php?insert=".$message);
+		header("Location: catalog.php?insert=".$resultMessage);
 	}
 }
 
 if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['insert'])) {
 	$insert = $_GET['insert'];
 	if($insert=='success'){
-		$insertMessage = 'カートに加えました';
-		$insertClass   = 'success';
+		$resultMessage = 'カートに加えました';
+		$class   = 'success';
 	}else{
-		$insertMessage = 'カートに加えるのに失敗しました';
-		$insertClass   = 'failed';
+		$resultMessage = 'カートに加えるのに失敗しました';
+		$class   = 'failed';
 	}
 }else{
-	$insertMessage = '';
+	$resultMessage = '';
 }
 
 // View(view.php）読み込み
