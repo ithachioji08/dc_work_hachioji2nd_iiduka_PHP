@@ -41,13 +41,45 @@ include "ECsight_header.php"
 		</div>
 	<?php }?>
 </div>
-
+<div id="modal" onclick="modalClose()">
+	<p>現在のカート内の商品はこちらです。画面のどこかをクリックすることで閉じます</p>
+	<?php 
+	$totalprice = 0;
+	foreach ($cartData as $row) {?>
+		<p>
+			<span ><?php print $row['product_name'];?></span>
+			<span> ￥<?php print $row['price'];?></span>
+			<span>  <?php print $row['product_qty']?>個</span>
+		</p>
+	<?php 
+		$totalprice += $row['price'] * $row['product_qty'];
+	}
+	?>
+</div>
+<!-- 2番目に表示されるモーダル（オーバーウエィ)半透明な膜 -->
+<div id="modalOverlay" ></div>
 <?php 
 $toCart = true;
 $action = "cart.php";
 $value  = "カートへ";
 include "ECsight_links.php"
 ?>
+
+<script>
+	let cartData = JSON.parse('<?php print $cartData;?>');
+	let modal    = document.getElementById("modal").style.display;
+	let overlay  = document.getElementById("modalOverlay").style.display
+	console.log(cartData);
+	if(cartData.length >0){
+		modal   = "block";
+		overlay = "block";
+	}
+
+	function modalClose(){
+		modal   = "none";
+		overlay = "none";
+	}
+</script>
 
 </body>
 </html>

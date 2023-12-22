@@ -30,7 +30,10 @@ include "ECsight_header.php"
 			<?php }?>
 			<input type="submit" value= "商品を登録"/>
 		</form>
-		<div class="link"><a href="index.php">ログアウト</a></div>
+		<form class=" <?php print $class?>" method="post" action ="index.php">
+			<input type="hidden" name="logout">
+			<input class="hrefButton logoutButton" type="submit" value="ログアウト">
+		</form>
 		<?php if($resultMessage!=''){?>
 			<p class=<?php print $updateResult; ?>>
 				<?php print $resultMessage;?>

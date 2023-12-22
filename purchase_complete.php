@@ -2,10 +2,11 @@
 // Model（model.php）を読み込む
 require_once '../../include/model/ECsight_purchase_complete_model.php';
 require_once '../../include/config/const.php';
+require_once 'session_after_login.php';
 
 $pdo  = get_connection();
 
-$cartData = getCart($pdo,$_COOKIE['user_id']);
+$cartData = getCart($pdo);
 
 if(count($cartData) > 0){
 	deleteCart($pdo);

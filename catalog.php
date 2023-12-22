@@ -2,6 +2,8 @@
 // Model（model.php）を読み込む
 require_once '../../include/model/ECsight_catalog_model.php';
 require_once '../../include/config/const.php';
+require_once 'ECsight_get_cart.php';
+require_once 'session_after_login.php';
 
 $pdo         = get_connection();
 
@@ -28,6 +30,13 @@ if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['insert'])) {
 	}
 }else{
 	$resultMessage = '';
+}
+
+if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['back'])) {
+	$cartData = json_encode(getCart($pdo));
+
+}else{
+	$cartData = [];
 }
 
 // View(view.php）読み込み

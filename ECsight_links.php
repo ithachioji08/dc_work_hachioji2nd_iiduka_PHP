@@ -8,7 +8,8 @@
 	}else{
 		$class = 'linkForm center';
 	}?>
-	<form class=" <?php print $class?>" action ="index.php">
+	<form class=" <?php print $class?>" method="post" action ="index.php">
+		<input type="hidden" name="logout">
 		<input class="hrefButton logoutButton" type="submit" value="ログアウト">
 	</form>
 </div>

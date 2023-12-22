@@ -1,21 +1,10 @@
 <?php
 require_once 'ECsight_common_model.php';
+require_once 'ECsight_get_cart.php';
 
 function getCatalog($pdo){
 	$sql = "SELECT ec_image.image_id,ec_product.product_id, ec_product.product_name,ec_product.price ,ec_stock.stock_qty FROM ec_product INNER JOIN ec_image ON ec_product.product_image = ec_image.image_name INNER JOIN ec_stock ON ec_product.product_id = ec_stock.product_id where ec_product.public_flg = 1";
 	return get_sql_result($pdo,$sql);
-}
-
-function getCart($pdo,$id){
-	$cartData = [];
-	$sql    = "SELECT product_id FROM ec_cart where user_id=".$id;
-	if(!$result = get_sql_result($pdo,$sql)){
-		return $cartData;
-	}
-	foreach($result as $row){
-		array_push($cartData,$row['product_id']);
-	}
-	return $cartData;
 }
 
 function setCart($pdo,$productId,$userId){

@@ -2,7 +2,8 @@
 // Model（model.php）を読み込む
 require_once '../../include/model/ECsight_register_model.php';
 require_once '../../include/config/const.php';
- 
+require_once 'session_before_login.php';
+
 
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['user_name']) && isset($_POST['password'])) {

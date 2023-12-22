@@ -2,10 +2,11 @@
 // Model（model.php）を読み込む
 require_once '../../include/model/ECsight_cart_model.php';
 require_once '../../include/config/const.php';
+require_once 'session_after_login.php';
 
 $pdo      = get_connection();
 
-$cartData = getCart($pdo,$_COOKIE['userid']);
+$cartData = getCart($pdo);
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['productId']) && isset($_POST['stock'])) {
 	$message = updateQty($pdo,$_POST['productId'],$_POST['stock']);

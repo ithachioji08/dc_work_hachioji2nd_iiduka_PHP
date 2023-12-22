@@ -212,6 +212,7 @@ header h1{
 	max-width: 800px;
 	display: flex;
 	margin:auto;
+	margin-bottom: 60px;
 }
 .bigFont{
 	font-size: 20px;
