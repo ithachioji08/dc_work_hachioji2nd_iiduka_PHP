@@ -14,7 +14,8 @@ include "ECsight_header.php"
 	}?>
 </div>
 <div id="catalog">
-	<?php foreach ($catalogData as $row) {?>
+	<?php
+	 foreach ($catalogData as $row) {?>
 		<div class="catalogBox">
 			<div class="catalogProduct">
 				<?php $src = "../../htdocs/ec_sight/img/".$row['image_id'];
@@ -41,23 +42,28 @@ include "ECsight_header.php"
 		</div>
 	<?php }?>
 </div>
-<div id="modal" onclick="modalClose()">
-	<p>現在のカート内の商品はこちらです。画面のどこかをクリックすることで閉じます</p>
-	<?php 
-	$totalprice = 0;
-	foreach ($cartData as $row) {?>
-		<p>
-			<span ><?php print $row['product_name'];?></span>
-			<span> ￥<?php print $row['price'];?></span>
-			<span>  <?php print $row['product_qty']?>個</span>
-		</p>
-	<?php 
-		$totalprice += $row['price'] * $row['product_qty'];
-	}
-	?>
+
+
+<div id="modalOverlay"  onclick="modalClose()">
+	<div id="modal">
+		<p>現在のカート内の商品はこちらです。</p>
+		<p>画面のどこかをクリックすることで閉じます</p>
+		<div>
+			<?php 
+			$totalprice = 0;
+			foreach ($cartData as $row) {?>
+				<p>
+					<span class="modalName"><?php print $row['product_name'];?></span>
+					<span class="modalPrice"> ￥<?php print $row['price'];?></span>
+					<span class="modalCount">  <?php print $row['product_qty']?>個</span>
+				</p>
+			<?php 
+				$totalprice += $row['price'] * $row['product_qty'];
+			}
+			?>
+		</div>
+	</div>
 </div>
-<!-- 2番目に表示されるモーダル（オーバーウエィ)半透明な膜 -->
-<div id="modalOverlay" ></div>
 <?php 
 $toCart = true;
 $action = "cart.php";
@@ -66,18 +72,15 @@ include "ECsight_links.php"
 ?>
 
 <script>
-	let cartData = JSON.parse('<?php print $cartData;?>');
-	let modal    = document.getElementById("modal").style.display;
-	let overlay  = document.getElementById("modalOverlay").style.display
-	console.log(cartData);
-	if(cartData.length >0){
-		modal   = "block";
-		overlay = "block";
+	console.log(<?php echo $backed; ?>);
+	if(Boolean(<?php echo $backed; ?>)){
+		document.getElementById("modal").style.display        = "block";
+		document.getElementById("modalOverlay").style.display = "block";
 	}
 
 	function modalClose(){
-		modal   = "none";
-		overlay = "none";
+		document.getElementById("modal").style.display        = "none";
+		document.getElementById("modalOverlay").style.display = "none";
 	}
 </script>
 

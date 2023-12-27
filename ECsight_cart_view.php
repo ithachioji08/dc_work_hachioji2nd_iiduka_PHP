@@ -46,7 +46,7 @@ include "ECsight_header.php"
 	<p class="leftMiddle bigFont">
 		小計:<?php print $totalprice;?>円
 	</p>
-	<form class="rightMiddle" action="catalog.php">
+	<form class="rightMiddle" action="catalog.php" method = "post">
 		<input type="hidden" name="back">
 		<input class="hrefButton cartButton" type="submit" value="購入一覧へ戻る" >
 	</form>
