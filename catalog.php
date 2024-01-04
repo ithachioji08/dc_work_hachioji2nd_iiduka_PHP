@@ -32,7 +32,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['insert'])) {
 }
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['back'])) {
-	$cartData = getCart($pdo);
+	$cartData = getCart($pdo,$_COOKIE['userid']);
 	$backed   = true;
 }else{
 	$backed = false;

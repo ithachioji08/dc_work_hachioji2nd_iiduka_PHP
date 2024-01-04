@@ -6,10 +6,10 @@ require_once 'session_after_login.php';
 
 $pdo  = get_connection();
 
-$cartData = getCart($pdo);
+$cartData = getCart($pdo,$_COOKIE['userid']);
 
 if(count($cartData) > 0){
-	deleteCart($pdo);
+	deleteCart($pdo,$_COOKIE['userid']);
 	reduceStock($pdo,$cartData);
 	$cartStrings = convertString($cartData);
 	setcookie('id',$cartStrings['id']);

@@ -6,10 +6,10 @@ require_once 'session_after_login.php';
 
 $pdo      = get_connection();
 
-$cartData = getCart($pdo);
+$cartData = getCart($pdo,$_COOKIE['userid']);
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['productId']) && isset($_POST['stock'])) {
-	$message = updateQty($pdo,$_POST['productId'],$_POST['stock']);
+	$message = updateQty($pdo,$_POST['productId'],$_POST['stock'],$_COOKIE['userid']);
 
 	if($message=='OK'){
 		header("Location: cart.php?message=update");
@@ -19,7 +19,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['productId']) && isset($
 }
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delId']) ) {
-	$message = oneDelete($pdo,$_POST['delId']);
+	$message = oneDelete($pdo,$_POST['delId'],$_COOKIE['userid']);
 
 	if($message=='OK'){
 		header("Location: cart.php?message=delete");
