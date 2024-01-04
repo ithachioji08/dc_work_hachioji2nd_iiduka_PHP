@@ -49,7 +49,7 @@ header h1{
 	display: none;
 	width:80%;
 	max-width: 400px;
-	margin:50px auto auto auto;
+	margin: auto;
 	background-color: white;
 	border-radius: 10px;
 }
@@ -63,6 +63,12 @@ header h1{
 	top:0;
 	left:0;
 	background-color: rgba(0,0,0,0.5);
+}
+
+.modalData{
+	border: 1px solid black;
+	width:98%;
+	margin: auto;
 }
 
 .modalName{

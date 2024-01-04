@@ -48,7 +48,7 @@ include "ECsight_header.php"
 	<div id="modal">
 		<p>現在のカート内の商品はこちらです。</p>
 		<p>画面のどこかをクリックすることで閉じます</p>
-		<div>
+		<div class="modalData">
 			<?php 
 			$totalprice = 0;
 			foreach ($cartData as $row) {?>
@@ -62,6 +62,7 @@ include "ECsight_header.php"
 			}
 			?>
 		</div>
+		<p class="cartForm">合計  ￥<?php print $totalprice;?></p>
 	</div>
 </div>
 <?php 
