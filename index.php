@@ -33,6 +33,9 @@ if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['message'])) {
 		case 'blank':
 			$resultMessage = 'ユーザー名またはパスワードが入力されていません';
 			break;
+		case 'mismatch':
+			$resultMessage = 'ユーザー名またはパスワードが間違っています';
+			break;
 	}
 }else{
 	$resultMessage = '';
