@@ -2,9 +2,9 @@
 require_once 'ECsight_common_model.php';
 require_once 'ECsight_get_cart.php';
 
-function deleteCart($pdo){
+function deleteCart($pdo,$userid){
 	$pdo->beginTransaction();
-	$sql = "DELETE from ec_cart";
+	$sql = "DELETE from ec_cart where user_id=".$userid;
 	if(change_sql($pdo, $sql)){
 		$pdo->commit();
 	}else{
