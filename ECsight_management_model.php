@@ -110,6 +110,7 @@ function deletePdt($pdo,$id){
 		$pdo->commit();
 		return 'OK';
 	}else{
+		$pdo->rollback();
 		return 'file';
 	}
 }
