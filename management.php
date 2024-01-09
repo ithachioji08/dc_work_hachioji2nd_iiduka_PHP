@@ -2,6 +2,7 @@
 // Model（model.php）を読み込む
 require_once '../../include/model/ECsight_management_model.php';
 require_once '../../include/config/const.php';
+require_once 'session_after_login.php';
  
 $pdo       = get_connection();
 
