@@ -14,7 +14,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_name'])) {
 	$count   = $_POST['count'];
 	$image   = $_FILES['image'];
 	$status  = getStatus($_POST['status']);
-	brankCheck($name,$price,$image);
+	blankCheck($name,$price,$image);
 	$resultMessage = insert_product($pdo,$name,$price,$count,$image,$status);
 
 	if($resultMessage=='OK'){
@@ -108,7 +108,7 @@ function getStatus($status){
 	}
 }
 
-function brankCheck($name,$price,$image){
+function blankCheck($name,$price,$image){
 	if($name=='' || $price=='' || $image = ''){
 		header("Location: management.php?regist=blank");
 		exit();

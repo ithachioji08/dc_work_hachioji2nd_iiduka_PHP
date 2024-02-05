@@ -9,7 +9,7 @@ $pdo = get_connection();
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['user_name']) && isset($_POST['password'])) {
 	$name     = $_POST['user_name'];
 	$password = $_POST['password'];
-	brankCheck($name,$password);
+	blankCheck($name,$password);
 	$listCheck = get_user_list($pdo,$name,$password);
 	switch($listCheck){
 		case 'none';
@@ -45,7 +45,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['message'])) {
 // View(view.php）読み込み
 include_once '../../include/view/ECsight_index_view.php';
 
-function brankCheck($name,$password){
+function blankCheck($name,$password){
 	if($name=='' || $password==''){
 		header("Location: index.php?message=blank");
 		exit();
