@@ -42,7 +42,7 @@ require_once '../../include/view/ECsight_register_view.php';
 
 function validation($name,$password){
     $pdo = get_connection();
-    if($name=='' || $password==''){
+    if(empty($name) || empty($password)){
 		header("Location: register.php?message=blank");
 		exit();
 	}else if(strlen($name)<5 || !preg_match("/^[a-zA-Z0-9]+$/", $name)){

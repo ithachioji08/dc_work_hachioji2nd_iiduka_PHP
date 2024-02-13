@@ -2,33 +2,52 @@
 require_once 'ECsight_common_model.php';
 
 function sameName($pdo,$name){
-    $sql = 'select user_name from ec_user where user_name="'.$name.'"';
-    return count(get_sql_result($pdo,$sql)) >0;
+    $sql = 'select user_name from ec_user where user_name=:name';
+	$stmt = $pdo->prepare($sql);
+	$stmt -> bindParam(':name',$name, PDO::PARAM_STR);
+	$stmt -> execute();
+    return $stmt->rowCount() >0;
 }
 
 function insert_product($pdo,$name,$price,$count,$image,$status){
+	$imageName = $image['name'];
 	$pdo->beginTransaction();
-    $productSql = "INSERT into ec_product(product_id,product_name,price,product_image,public_flg,create_date,update_date) values(0,'".$name."',".$price.",'".$image['name']."',".$status.",CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)";
-    if(change_sql($pdo,$productSql)){
-		$productId = $pdo->lastInsertId();
-	}else{
+	try{
+		$productSql  = "INSERT into ec_product(product_id,product_name,price,product_image,public_flg,create_date,update_date) values(0,:name,:price,:imageName,:status,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)";
+		$stmt        = $pdo->prepare($productSql);
+		$stmt        -> bindParam(':name',$name, PDO::PARAM_STR);
+		$stmt        -> bindParam(':price',$price, PDO::PARAM_INT);
+		$stmt        -> bindParam(':imageName',$imageName, PDO::PARAM_STR);
+		$stmt        -> bindParam(':status',$status, PDO::PARAM_INT);
+		$stmt -> execute();
+		$productId   = $pdo->lastInsertId();
+	}catch(PDOException $e){
 		$pdo->rollback();
-        return 'product';
+		return 'product';
 	}
 
-	$imageSql   = "INSERT into ec_image(image_id,image_name,public_flg,create_date,update_date) values(0,'".$image['name']."',".$status.",CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)";
-	if(change_sql($pdo,$imageSql)){
-		$imageId = $pdo->lastInsertId();
-    }else{
+	try{
+		$imageSql = "INSERT into ec_image(image_id,image_name,public_flg,create_date,update_date) values(0,:imageName,:status,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)";
+		$stmt     = $pdo->prepare($imageSql);
+		$stmt     -> bindParam(':imageName',$imageName, PDO::PARAM_STR);
+		$stmt     -> bindParam(':status',$status, PDO::PARAM_INT);
+		$stmt     -> execute();
+		$imageId  = $pdo->lastInsertId();
+	}catch(PDOException $e){
 		$pdo->rollback();
-        return 'image';
+		return 'image';
 	}
 
-	$stockSql = "INSERT into ec_stock(stock_id,product_id,stock_qty,create_date,update_date) values(0,".$productId.",".$count.",CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)";
-	if(!change_sql($pdo,$stockSql)){
+	try{	
+		$stockSql = "INSERT into ec_stock(stock_id,product_id,stock_qty,create_date,update_date) values(0,:productId,:count,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)";
+		$stmt     =  $pdo->prepare($stockSql);
+		$stmt     -> bindParam(':productId',$productId, PDO::PARAM_INT);
+		$stmt     -> bindParam(':count',$count, PDO::PARAM_INT);
+		$stmt     -> execute();
+	}catch(PDOException $e){
 		$pdo->rollback();
         return 'stock';
-    }
+	}
 
 	$save = '../../htdocs/ec_sight/img/' . $imageId;
 	if(move_uploaded_file($image['tmp_name'], $save)){
@@ -46,25 +65,15 @@ function getTable($pdo){
 }
 
 function changeFlg($pdo,$id){
-	$flgSql     = "SELECT public_flg from ec_product where product_id = ".$id;
-	$sql_result = get_sql_result($pdo,$flgSql);
-	try{
-		if($sql_result[0]['public_flg']==1){
-			$flg = 0;
-		}else{
-			$flg = 1;
-		}
-	}catch(Exception $e){
-		return 'not found';
-	}
-	
-
 	$pdo->beginTransaction();
-	$updateSql = "UPDATE ec_product set public_flg =".$flg.",update_date=CURRENT_TIMESTAMP where product_id = ".$id;
-	if(change_sql($pdo, $updateSql)){
+	try{
+		$updateSql = "UPDATE ec_product set public_flg =if(public_flg = 1, 0, 1),update_date=CURRENT_TIMESTAMP where product_id = :id";
+		$stmt      = $pdo->prepare($updateSql);
+		$stmt      -> bindParam(':id',$id, PDO::PARAM_INT);
+		$stmt      -> execute();
 		$pdo->commit();
 		return 'OK';
-	}else{
+	}catch(PDOException $e){
 		$pdo->rollback();
 		return 'update';
 	}
@@ -72,35 +81,57 @@ function changeFlg($pdo,$id){
 
 function changeStk($pdo,$id,$stock){
 	$pdo->beginTransaction();
-	$updateSql = "UPDATE ec_stock set stock_qty =".$stock.",update_date=CURRENT_TIMESTAMP where product_id = ".$id;
-	if(change_sql($pdo, $updateSql)){
+	try{
+		$sql  = "UPDATE ec_stock set stock_qty =:stock,update_date=CURRENT_TIMESTAMP where product_id = :id";
+		$stmt = $pdo->prepare($sql);
+		$stmt -> bindParam(':stock',$stock, PDO::PARAM_INT);
+		$stmt -> bindParam(':id',$id, PDO::PARAM_INT);
+		$stmt -> execute();
 		$pdo->commit();
 		return 'OK';
-	}else{
+	}catch(PDOException $e){
 		$pdo->rollback();
 		return 'failed';
 	}
 }
 
 function deletePdt($pdo,$id){
-	$selectSql  = "SELECT image_id FROM ec_image INNER JOIN ec_product ON ec_product.product_image = ec_image.image_name where ec_product.product_id =".$id;
-	if($result = get_sql_result($pdo,$selectSql)){
+	$selectSql = "SELECT image_id FROM ec_image INNER JOIN ec_product ON ec_product.product_image = ec_image.image_name where ec_product.product_id = :id";
+	$stmt      =  $pdo->prepare($selectSql);
+	$stmt      -> bindParam(':id',$id, PDO::PARAM_INT);
+	$stmt -> execute();
+	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	if($stmt->rowCount()){
 		$imageId = $result[0]['image_id'];
 	}else{
 		return 'not_found';
 	}
 
 	$pdo->beginTransaction();
-	$stockSql   = "DELETE from ec_stock where product_id = ".$id;
-	$productSql = "DELETE from ec_product where product_id = ".$id;
-	$imageSql   = "DELETE from ec_image where image_id = ".$imageId;
-	if(!change_sql($pdo, $stockSql)){
+	$stockSql   = "DELETE from ec_stock where product_id = :id";
+	$productSql = "DELETE from ec_product where product_id = :id";
+	$imageSql   = "DELETE from ec_image where image_id = :imageId";
+	try{
+		$stmt = $pdo->prepare($stockSql);
+		$stmt -> execute();
+	}catch(PDOException $e){
 		$pdo->rollback();
 		return 'stock';
-	}else if(!change_sql($pdo, $productSql)){
+	}
+
+	try{
+		$stmt = $pdo->prepare($productSql);
+		$stmt -> execute();
+	}catch(PDOException $e){
 		$pdo->rollback();
 		return 'product';
-	}else if(!change_sql($pdo, $imageSql)){
+	}
+	
+	try{
+		$stmt = $pdo->prepare($imageSql);
+		$stmt -> bindParam(':imageId',$imageId, PDO::PARAM_INT);
+		$stmt -> execute();
+	}catch(PDOException $e){
 		$pdo->rollback();
 		return 'image';
 	}

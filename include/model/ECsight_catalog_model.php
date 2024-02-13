@@ -8,26 +8,31 @@ function getCatalog($pdo){
 }
 
 function setCart($pdo,$productId,$userId){
-	$countSql = "SELECT count(1) from ec_cart where user_id=".$userId." and product_id=".$productId;
-	if(!$count = get_sql_result($pdo,$countSql)){
-		return 'select';
-	}
+	$countSql = "SELECT count(1) from ec_cart where user_id=:userId and product_id=:productId";
+	$stmt     = $pdo->prepare($countSql);
+	$stmt     -> bindParam(':productId',$productId,PDO::PARAM_INT);
+	$stmt     -> bindParam(':userId',$userId,PDO::PARAM_INT);
+	$stmt     -> execute();
+	$result   = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 	$pdo->beginTransaction();
-	if($count[0]['count(1)'] ==0){
-		$sql          = "INSERT into ec_cart(cart_id,user_id,product_id,product_qty,create_date,update_date) values(0,".$userId.",".$productId.",1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)";
+	if($result[0]['count(1)'] ==0){
+		$sql          = "INSERT into ec_cart(cart_id,user_id,product_id,product_qty,create_date,update_date) values(0,:userId,:productId,1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)";
 		$errorMessage = 'insert';
 	}else{
-		$sql          = "UPDATE ec_cart set product_qty = product_qty+1,update_date=CURRENT_TIMESTAMP where product_id = ".$productId." and user_id=".$userId;
+		$sql          = "UPDATE ec_cart set product_qty = product_qty+1,update_date=CURRENT_TIMESTAMP where product_id = :productId and user_id=:userId";
 		$errorMessage = 'update';
 	}
 
-	if(change_sql($pdo, $sql)){
+	try{
+		$stmt =  $pdo->prepare($sql);
+		$stmt -> bindParam(':productId',$productId,PDO::PARAM_INT);
+		$stmt -> bindParam(':userId',$userId,PDO::PARAM_INT);
+		$stmt -> execute();
 		$pdo->commit();
 		return 'OK';
-	}else{
+	}catch(PDOException $e){
 		$pdo->rollback();
 		return $errorMessage;
 	}
-
 }

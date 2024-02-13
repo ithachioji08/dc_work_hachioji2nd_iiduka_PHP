@@ -5,13 +5,14 @@
 * @return object $pdo 
 */
 function get_connection() {
-  try{
-    // PDOインスタンスの生成
-   $pdo = new PDO(dsn, login_user, password);
-  } catch (PDOException $e) {
-    echo $e->getMessage();
-    exit();
-  }
+  	try{
+   	 // PDOインスタンスの生成
+   		$pdo = new PDO(dsn, login_user, password);
+   		$pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+  	} catch (PDOException $e) {
+		echo $e->getMessage();
+		exit();
+	}
 
   return $pdo;
 }

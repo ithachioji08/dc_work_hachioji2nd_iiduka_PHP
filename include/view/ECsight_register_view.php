@@ -12,7 +12,7 @@ include "ECsight_header.php"
 		<?php }?>
 		<form method="post">
 			<p>ユーザー名:<input type="text" name="user_name"></p>
-			<p>パスワード:<input type="text" name="password"></p>
+			<p>パスワード:<input type="password" name="password"></p>
 			<input class="btn" type="submit" value= "登録"/>
 		</form>
 		<div class="link"><a href="index.php">ログインページへ</a></div>
