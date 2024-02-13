@@ -4,22 +4,31 @@ require_once 'ECsight_get_cart.php';
 
 function deleteCart($pdo,$userid){
 	$pdo->beginTransaction();
-	$sql = "DELETE from ec_cart where user_id=".$userid;
-	if(change_sql($pdo, $sql)){
+	try{
+		$sql  = "DELETE from ec_cart where user_id=:userId";
+		$stmt = $pdo->prepare($sql);
+		$stmt -> bindParam(':userId',$userid, PDO::PARAM_INT);
+		$stmt -> execute();
 		$pdo->commit();
-	}else{
+	}catch(PDOException $e){
 		$pdo->rollback();
 	}
+
 }
 
 function reduceStock($pdo,$cartData){
 	$pdo->beginTransaction();
-	foreach($cartData as $row){
-		$sql = "UPDATE ec_stock set stock_qty = stock_qty-".$row['product_qty'].",update_date=CURRENT_TIMESTAMP where product_id = ".$row['product_id'];
-		if(!change_sql($pdo, $sql)){
-			$pdo->rollback();
-			return false;
+	try{
+		foreach($cartData as $row){
+			$sql = "UPDATE ec_stock set stock_qty = stock_qty-:qty,update_date=CURRENT_TIMESTAMP where product_id = :productId";
+			$stmt = $pdo->prepare($sql);
+			$stmt -> bindParam(':qty',$row['product_qty'], PDO::PARAM_INT);
+			$stmt -> bindParam(':productId',$row['product_id'], PDO::PARAM_INT);
+			$stmt -> execute();
 		}
+		$pdo->commit();
+	}catch(PDOException $e){
+		$pdo->rollback();
 	}
-	$pdo->commit();
+
 }
