@@ -113,6 +113,7 @@ function deletePdt($pdo,$id){
 	$imageSql   = "DELETE from ec_image where image_id = :imageId";
 	try{
 		$stmt = $pdo->prepare($stockSql);
+		$stmt -> bindParam(':id',$id, PDO::PARAM_INT);
 		$stmt -> execute();
 	}catch(PDOException $e){
 		$pdo->rollback();
@@ -121,6 +122,7 @@ function deletePdt($pdo,$id){
 
 	try{
 		$stmt = $pdo->prepare($productSql);
+		$stmt -> bindParam(':id',$id, PDO::PARAM_INT);
 		$stmt -> execute();
 	}catch(PDOException $e){
 		$pdo->rollback();
