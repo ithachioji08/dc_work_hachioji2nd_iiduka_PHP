@@ -35,19 +35,3 @@ function get_sql_result($pdo, $sql) {
   }
   return $data;
 }
-
-/**
-* SQL文の挿入編集を実行。
-*
-* @param object $pdo
-* @param string $sql 実行されるSQL文章
-* @return boolean 結果セットの配列
-*/
-function change_sql($pdo, $sql) {
-	
-    if ($pdo->query($sql)) {
-      return true;
-    }else {
-      return false;
-    }
-}

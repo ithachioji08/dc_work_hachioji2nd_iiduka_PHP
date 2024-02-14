@@ -16,7 +16,7 @@ function insert_user($pdo,$name,$password){
 		$sql  = "INSERT into ec_user(user_id,user_name,password,create_date,update_date) values(0,:name,:password,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)";
 		$stmt = $pdo->prepare($sql);
 		$stmt -> bindParam(':name',$name, PDO::PARAM_STR);
-		$stmt -> bindParam(':password',$password, PDO::PARAM_STR);
+		$stmt -> bindParam(':password', password_hash($password, PASSWORD_DEFAULT), PDO::PARAM_STR);
 		$stmt -> execute();
 		$pdo->commit();
         return true;
