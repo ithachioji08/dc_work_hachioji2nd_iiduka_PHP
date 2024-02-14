@@ -9,7 +9,7 @@ $pdo = get_connection();
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['user_name']) && isset($_POST['password'])) {
 	$name     = $_POST['user_name'];
 	$password = $_POST['password'];
-	blankCheck($name,$password);
+	validation($name,$password);
 	$listCheck = get_user_list($pdo,$name,$password);
 	switch($listCheck){
 		case 'none';
@@ -33,6 +33,12 @@ if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['message'])) {
 		case 'blank':
 			$resultMessage = 'ユーザー名またはパスワードが入力されていません';
 			break;
+		case 'username':
+			$resultMessage = 'ユーザー名は、半角英数字かつ5文字以上です';
+			break;
+		case 'password':
+			$resultMessage = 'パスワードは、半角英数字かつ8文字以上です';
+			break;
 		case 'mismatch':
 			$resultMessage = 'ユーザー名またはパスワードが間違っています';
 			break;
@@ -45,9 +51,18 @@ if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['message'])) {
 // View(view.php）読み込み
 include_once '../../include/view/ECsight_index_view.php';
 
-function blankCheck($name,$password){
-	if($name=='' || $password==''){
+function validation($name,$password){
+	if(empty($name) || empty($password)){
 		header("Location: index.php?message=blank");
 		exit();
-	}
+	//ec_adminだけ例外処理
+	}else if($name =='ec_admin' && $password == 'ec_admin'){
+		return;
+	}else if(strlen($name)<5 || !preg_match("/^[a-zA-Z0-9]+$/", $name)){
+        header("Location: index.php?message=username");
+        exit();
+    }else if(strlen($password)<8 || !preg_match("/^[a-zA-Z0-9]+$/", $password)){
+        header("Location: index.php?message=password");
+        exit();
+    }
 }
