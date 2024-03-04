@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title><?php echo $title?></title>
-	<link rel="stylesheet" href="ECsight.css" />
+	<link rel="stylesheet" href="ECsite.css" />
 </head>
 <body>
-<header><h1>EC sight</h1></header>
+<header><h1>EC site</h1></header>

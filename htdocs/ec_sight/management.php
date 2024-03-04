@@ -1,6 +1,6 @@
 <?php
 // Model（model.php）を読み込む
-require_once '../../include/model/ECsight_management_model.php';
+require_once '../../include/model/ECsite_management_model.php';
 require_once '../../include/config/const.php';
 require_once 'session_after_login.php';
  
@@ -14,7 +14,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_name'])) {
 	$count   = $_POST['count'];
 	$image   = $_FILES['image'];
 	$status  = getStatus($_POST['status']);
-	blankCheck($name,$price,$image);
+	validation($name,$price,$image);
 	$resultMessage = insert_product($pdo,$name,$price,$count,$image,$status);
 
 	if($resultMessage=='OK'){
@@ -33,6 +33,18 @@ if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['regist'])) {
 		case 'blank':
 			$regist_success = '';
 			$regist_failed  = '空白の入力欄があります';
+			break;
+		case 'type':
+			$regist_success = '';
+			$regist_failed  = 'ファイルの形式が違います';
+			break;
+		case 'size':
+			$regist_success = '';
+			$regist_failed  = 'ファイルのサイズが大きすぎます。2メガバイト以内に収めてください';
+			break;
+		case 'name':
+			$regist_success = '';
+			$regist_failed  = 'ファイル名がjpg/jpeg/png以外です';
 			break;
 		default:
 			$regist_success = '';
@@ -98,19 +110,5 @@ if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['update'])) {
 }
 
 // View(view.php）読み込み
-include_once '../../include/view/ECsight_management_view.php';
+include_once '../../include/view/ECsite_management_view.php';
 
-function getStatus($status){
-	if ($status == '公開'){
-		return 1;
-	}else{
-		return 0;
-	}
-}
-
-function blankCheck($name,$price,$image){
-	if($name=='' || $price=='' || $image = ''){
-		header("Location: management.php?regist=blank");
-		exit();
-	}
-}

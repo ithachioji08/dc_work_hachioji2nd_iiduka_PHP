@@ -1,6 +1,6 @@
 <?php
-require_once 'ECsight_common_model.php';
-require_once 'ECsight_get_cart.php';
+require_once 'ECsite_common_model.php';
+require_once 'ECsite_get_cart.php';
 
 function deleteCart($pdo,$userid){
 	$pdo->beginTransaction();

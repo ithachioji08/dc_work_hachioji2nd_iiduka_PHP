@@ -1,6 +1,6 @@
 <?php
-require_once 'ECsight_common_model.php';
-require_once 'ECsight_get_cart.php';
+require_once 'ECsite_common_model.php';
+require_once 'ECsite_get_cart.php';
 
 function getCatalog($pdo){
 	$sql = "SELECT ec_image.image_id,ec_product.product_id, ec_product.product_name,ec_product.price ,ec_stock.stock_qty FROM ec_product INNER JOIN ec_image ON ec_product.product_image = ec_image.image_name INNER JOIN ec_stock ON ec_product.product_id = ec_stock.product_id where ec_product.public_flg = 1";

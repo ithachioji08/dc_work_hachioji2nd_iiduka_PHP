@@ -1,6 +1,6 @@
 <?php
-require_once 'ECsight_common_model.php';
-require_once 'ECsight_get_cart.php';
+require_once 'ECsite_common_model.php';
+require_once 'ECsite_get_cart.php';
 
 function updateQty($pdo,$id,$stock,$userId){
 	$selectSql  = "SELECT stock_qty from ec_stock where product_id=:id";

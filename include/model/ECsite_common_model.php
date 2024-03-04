@@ -5,14 +5,13 @@
 * @return object $pdo 
 */
 function get_connection() {
-  	try{
-   	 // PDOインスタンスの生成
-   		$pdo = new PDO(dsn, login_user, password);
-   		$pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-  	} catch (PDOException $e) {
-		echo $e->getMessage();
-		exit();
-	}
+  try{
+    // PDOインスタンスの生成
+   $pdo = new PDO(dsn, login_user, password);
+  } catch (PDOException $e) {
+    echo $e->getMessage();
+    exit();
+  }
 
   return $pdo;
 }
@@ -34,4 +33,20 @@ function get_sql_result($pdo, $sql) {
     }
   }
   return $data;
+}
+
+/**
+* SQL文の挿入編集を実行。
+*
+* @param object $pdo
+* @param string $sql 実行されるSQL文章
+* @return boolean 結果セットの配列
+*/
+function change_sql($pdo, $sql) {
+	
+    if ($pdo->query($sql)) {
+      return true;
+    }else {
+      return false;
+    }
 }

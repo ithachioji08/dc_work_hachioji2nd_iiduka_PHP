@@ -1,6 +1,6 @@
 <?php
 // Model（model.php）を読み込む
-require_once '../../include/model/ECsight_index_model.php';
+require_once '../../include/model/ECsite_index_model.php';
 require_once '../../include/config/const.php';
 require_once 'session_before_login.php';
  
@@ -49,7 +49,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['message'])) {
 
  
 // View(view.php）読み込み
-include_once '../../include/view/ECsight_index_view.php';
+include_once '../../include/view/ECsite_index_view.php';
 
 function validation($name,$password){
 	if(empty($name) || empty($password)){

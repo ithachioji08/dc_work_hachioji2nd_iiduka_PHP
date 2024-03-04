@@ -1,5 +1,5 @@
 <?php
-require_once 'ECsight_common_model.php';
+require_once 'ECsite_common_model.php';
 
 function sameName($pdo,$name){
     $sql  = 'SELECT count(1) from ec_user where user_name=:name';
@@ -24,4 +24,26 @@ function insert_user($pdo,$name,$password){
 		$pdo->rollback();
 		return false;
 	}
+}
+
+function validation($name,$password){
+    $pdo = get_connection();
+    if(empty($name) || empty($password)){
+		header("Location: register.php?message=blank");
+		exit();
+	}else if(strlen($name)<5 || !preg_match("/^[a-zA-Z0-9]+$/", $name)){
+        header("Location: register.php?message=username");
+        exit();
+    }else if(strlen($password)<8 || !preg_match("/^[a-zA-Z0-9]+$/", $password)){
+        header("Location: register.php?message=password");
+        exit();
+    }else if(sameName($pdo,$name)){
+        header("Location: register.php?message=sameName");
+        exit();
+    }elseif(insert_user($pdo,$name,$password)){
+        header("Location: register.php?message=success");
+		exit();
+    }else{
+        header("Location: register.php?message=failed");
+    }
 }

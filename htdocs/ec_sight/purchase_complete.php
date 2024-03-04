@@ -1,6 +1,6 @@
 <?php
 // Model（model.php）を読み込む
-require_once '../../include/model/ECsight_purchase_complete_model.php';
+require_once '../../include/model/ECsite_purchase_complete_model.php';
 require_once '../../include/config/const.php';
 require_once 'session_after_login.php';
 
@@ -54,4 +54,4 @@ function convertArray($id,$name,$price,$qty,$img){
 }
 
 // View(view.php）読み込み
-include_once '../../include/view/ECsight_purchase_complete_view.php';
+include_once '../../include/view/ECsite_purchase_complete_view.php';

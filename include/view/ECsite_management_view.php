@@ -1,7 +1,7 @@
 <?php 
 $title = 'ECサイト_商品管理';
 $is_home = true; //トップページの判定用の変数
-include "ECsight_header.php"
+include "ECsite_header.php"
 ?>
 	<div class="regist">
 		<?php  if($regist_success!=''){?>
@@ -65,9 +65,9 @@ include "ECsight_header.php"
 			?>
 				<tr>
 					<td class="tableCell tableImage <?php print $pubClass?>">
-						<?php $src = "../../htdocs/ec_sight/img/".$row['image_id'];
+						<?php $src = "../../htdocs/ec_site/img/".$row['image_id'];
 						if (file_exists($src)) {?>
-							<img src='/hachioji2/0001/ec_sight/img/<?php print $row['image_id']?>'>
+							<img src='/hachioji2/0001/ec_site/img/<?php print $row['image_id']?>'>
 						<?php }else{?>
 							<div class="noimage"><p>no image</p></div>
 						<?php }?>

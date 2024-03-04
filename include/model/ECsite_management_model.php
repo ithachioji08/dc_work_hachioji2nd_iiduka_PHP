@@ -1,5 +1,5 @@
 <?php
-require_once 'ECsight_common_model.php';
+require_once 'ECsite_common_model.php';
 
 function sameName($pdo,$name){
     $sql = 'select user_name from ec_user where user_name=:name';
@@ -46,10 +46,27 @@ function insert_product($pdo,$name,$price,$count,$image,$status){
 		$stmt     -> execute();
 	}catch(PDOException $e){
 		$pdo->rollback();
-        return 'stock';
+		return 'stock';
 	}
 
-	$save = '../../htdocs/ec_sight/img/' . $imageId;
+	$allowedMimeTypes = ['image/jpeg', 'image/png'];
+	
+	$maxFileSize = 2 * 1024 * 1024; // 例: 2MB
+	if (!in_array($_FILES['image']['type'], $allowedMimeTypes)) {
+		$pdo->rollback();
+		return 'type';
+	}
+	if ($_FILES['image']['size'] > $maxFileSize) {
+		$pdo->rollback();
+		return 'size';
+	}
+	$fileName = basename($_FILES['image']['name']);
+	if (!preg_match('/^\w+\.(jpg|jpeg|png)$/', $fileName)) {
+		$pdo->rollback();
+		return 'name';
+	}
+	
+	$save = '../../htdocs/ec_site/img/' . $imageId;
 	if(move_uploaded_file($image['tmp_name'], $save)){
 		$pdo->commit();
 		return 'OK';
@@ -138,12 +155,27 @@ function deletePdt($pdo,$id){
 		return 'image';
 	}
 
-	$file = '../../htdocs/ec_sight/img/' . $imageId;
+	$file = '../../htdocs/ec_site/img/' . $imageId;
 	if (unlink($file)){
 		$pdo->commit();
 		return 'OK';
 	}else{
 		$pdo->rollback();
 		return 'file';
+	}
+}
+
+function getStatus($status){
+	if ($status == '公開'){
+		return 1;
+	}else{
+		return 0;
+	}
+}
+
+function validation($name,$price,$image){
+	if($name=='' || $price=='' || $image = ''){
+		header("Location: management.php?regist=blank");
+		exit();
 	}
 }

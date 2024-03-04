@@ -1,7 +1,7 @@
 <?php 
 $title = 'ECサイト_商品一覧';
 $is_home = true; //トップページの判定用の変数
-include "ECsight_header.php"
+include "ECsite_header.php"
 ?>
 <div class="message">
 	<?php if($resultMessage != ''){?>
@@ -18,9 +18,9 @@ include "ECsight_header.php"
 	 foreach ($catalogData as $row) {?>
 		<div class="catalogBox">
 			<div class="catalogProduct">
-				<?php $src = "../../htdocs/ec_sight/img/".$row['image_id'];
+				<?php $src = "../../htdocs/ec_site/img/".$row['image_id'];
 				if (file_exists($src)) {?>
-					<img class="catalogImage" src='/hachioji2/0001/ec_sight/img/<?php print $row['image_id']?>'>
+					<img class="catalogImage" src='/hachioji2/0001/ec_site/img/<?php print $row['image_id']?>'>
 				<?php }else{?>
 					<div class="noimage"><p>no image</p></div>
 				<?php }?>
@@ -69,10 +69,11 @@ include "ECsight_header.php"
 $toCart = true;
 $action = "cart.php";
 $value  = "カートへ";
-include "ECsight_links.php"
+include "ECsite_links.php"
 ?>
 
 <script>
+	console.log(<?php echo $backed; ?>);
 	if(Boolean(<?php echo $backed; ?>)){
 		document.getElementById("modal").style.display        = "block";
 		document.getElementById("modalOverlay").style.display = "block";

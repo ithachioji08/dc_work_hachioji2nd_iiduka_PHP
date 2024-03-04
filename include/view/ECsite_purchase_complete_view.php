@@ -1,7 +1,7 @@
 <?php 
 $title = 'ECサイト_購入完了';
 $is_home = true; //トップページの判定用の変数
-include "ECsight_header.php"
+include "ECsite_header.php"
 ?>
 <div class="message">
 	<div class="messageBox">
@@ -15,9 +15,9 @@ include "ECsight_header.php"
 	$totalprice = 0;
 	foreach ($cartData as $row) {?>
 		<div class="cartProduct">
-			<?php $src = "../../htdocs/ec_sight/img/".$row['image_id'];
+			<?php $src = "../../htdocs/ec_site/img/".$row['image_id'];
 			if (file_exists($src)) {?>
-				<img class="cartImage" src='/hachioji2/0001/ec_sight/img/<?php print $row['image_id']?>'>
+				<img class="cartImage" src='/hachioji2/0001/ec_site/img/<?php print $row['image_id']?>'>
 			<?php }else{?>
 				<div class="noimage"><p>no image</p></div>
 			<?php }?>
@@ -40,7 +40,7 @@ include "ECsight_header.php"
 $toCart = true;
 $action = "catalog.php";
 $value  = "商品一覧へ";
-include "ECsight_links.php"
+include "ECsite_links.php"
 ?>
 
 </body>

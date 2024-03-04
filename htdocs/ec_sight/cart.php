@@ -1,6 +1,6 @@
 <?php
 // Model（model.php）を読み込む
-require_once '../../include/model/ECsight_cart_model.php';
+require_once '../../include/model/ECsite_cart_model.php';
 require_once '../../include/config/const.php';
 require_once 'session_after_login.php';
 
@@ -56,4 +56,4 @@ if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['message'])) {
 }
 
 
-require_once '../../include/view/ECsight_cart_view.php';
+require_once '../../include/view/ECsite_cart_view.php';

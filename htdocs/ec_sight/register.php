@@ -1,6 +1,6 @@
 <?php
 // Model（model.php）を読み込む
-require_once '../../include/model/ECsight_register_model.php';
+require_once '../../include/model/ECsite_register_model.php';
 require_once '../../include/config/const.php';
 require_once 'session_before_login.php';
 
@@ -38,26 +38,4 @@ if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['message']) ) {
     $resultMessage = '';
 }
 
-require_once '../../include/view/ECsight_register_view.php';
-
-function validation($name,$password){
-    $pdo = get_connection();
-    if(empty($name) || empty($password)){
-		header("Location: register.php?message=blank");
-		exit();
-	}else if(strlen($name)<5 || !preg_match("/^[a-zA-Z0-9]+$/", $name)){
-        header("Location: register.php?message=username");
-        exit();
-    }else if(strlen($password)<8 || !preg_match("/^[a-zA-Z0-9]+$/", $password)){
-        header("Location: register.php?message=password");
-        exit();
-    }else if(sameName($pdo,$name)){
-        header("Location: register.php?message=sameName");
-        exit();
-    }elseif(insert_user($pdo,$name,$password)){
-        header("Location: register.php?message=success");
-		exit();
-    }else{
-        header("Location: register.php?message=failed");
-    }
-}
+require_once '../../include/view/ECsite_register_view.php';

@@ -1,6 +1,6 @@
 <?php
 // Model（model.php）を読み込む
-require_once '../../include/model/ECsight_catalog_model.php';
+require_once '../../include/model/ECsite_catalog_model.php';
 require_once '../../include/config/const.php';
 require_once 'session_after_login.php';
 
@@ -40,4 +40,4 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['back'])) {
 
 
 // View(view.php）読み込み
-include_once '../../include/view/ECsight_catalog_view.php';
+include_once '../../include/view/ECsite_catalog_view.php';
