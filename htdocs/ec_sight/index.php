@@ -14,17 +14,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['user_name']) && isset($
 	switch($listCheck){
 		case 'none';
 			header("Location: index.php?message=mismatch");
-			break;
+			exit();
 		case 'admin':
 			$_SESSION['login_id'] =  $listCheck;
 			setcookie('userid', $listCheck,time()+60*60*24);
 			header("Location: management.php");
-			break;
+			exit();
 		default:
 			$_SESSION['login_id'] =  $listCheck;
 			setcookie('userid', $listCheck,time()+60*60*24);
 			header("Location: catalog.php");
-			break;
+			exit();
 	}
 }
 

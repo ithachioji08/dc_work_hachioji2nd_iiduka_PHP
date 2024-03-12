@@ -7,7 +7,7 @@ include "ECsite_header.php"
 		<h1>ユーザー登録</h1>
 		<?php if($resultMessage!=''){?>
 			<p class="error">
-				<?php print $resultMessage;?>
+				<?php print htmlspecialchars($resultMessage, ENT_QUOTES, 'UTF-8');?>
 			</p>
 		<?php }?>
 		<form method="post">
