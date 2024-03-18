@@ -1,8 +1,8 @@
 <?php
 // Model（model.php）を読み込む
+require_once '../../include/utility/session_management.php';
 require_once '../../include/model/ECsite_cart_model.php';
 require_once '../../include/config/const.php';
-require_once 'session_after_login.php';
 
 $pdo      = get_connection();
 
@@ -13,8 +13,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['productId']) && isset($
 
 	if($message=='OK'){
 		header("Location: cart.php?message=update");
+		exit();
 	}else{
 		header("Location: cart.php?message=".$message);
+		exit();
 	}
 }
 
@@ -23,8 +25,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delId']) ) {
 
 	if($message=='OK'){
 		header("Location: cart.php?message=delete");
+		exit();
 	}else{
 		header("Location: cart.php?message=".$message);
+		exit();
 	}
 }
 

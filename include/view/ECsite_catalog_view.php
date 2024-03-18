@@ -4,10 +4,10 @@ $is_home = true; //トップページの判定用の変数
 include "ECsite_header.php"
 ?>
 <div class="message">
-	<?php if($resultMessage != ''){?>
+	<?php if(htmlspecialchars($resultMessage) != ''){?>
 		<div class="messageBox">
-			<p class=<?php print "$class";?>>
-				<?php print $resultMessage;?>
+			<p class=<?php print htmlspecialchars($class);?>>
+				<?php print htmlspecialchars($resultMessage);?>
 			</p>
 		</div>
 	<?php
@@ -18,24 +18,24 @@ include "ECsite_header.php"
 	 foreach ($catalogData as $row) {?>
 		<div class="catalogBox">
 			<div class="catalogProduct">
-				<?php $src = "../../htdocs/ec_site/img/".$row['image_id'];
+				<?php $src = "../../htdocs/ec_site/img/".htmlspecialchars($row['image_id']);
 				if (file_exists($src)) {?>
-					<img class="catalogImage" src='/hachioji2/0001/ec_site/img/<?php print $row['image_id']?>'>
+					<img class="catalogImage" src='/hachioji2/0001/ec_site/img/<?php print htmlspecialchars($row['image_id'])?>'>
 				<?php }else{?>
 					<div class="noimage"><p>no image</p></div>
 				<?php }?>
 				<p>
-					<span class="left"><?php print $row['product_name']?></span>
-					<span class="right"><?php print $row['price']?>円</span>
+					<span class="left"><?php print htmlspecialchars($row['product_name'])?></span>
+					<span class="right"><?php print htmlspecialchars($row['price'])?>円</span>
 				</p>
 				<form  method ="post">
-					<input type="hidden" name="productId" value="<?php print $row['product_id']?>">
-					<?php if($row['stock_qty'] < 1){
-						$inputData = 'disabled="disabled" value="売り切れ"';
+					<input type="hidden" name="productId" value="<?php print htmlspecialchars($row['product_id'])?>">
+					<?php if(htmlspecialchars($row['stock_qty']) < 1){
+						$inputData = 'disabled="disabled" value=売り切れ';
 					}else{
-						$inputData = 'value="カートに入れる"';
+						$inputData = 'value=カートに入れる';
 					}?>
-					<input type="submit" class="inCart" <?php print $inputData;?> >
+					<input type="submit" class="inCart" <?php print htmlspecialchars($inputData);?> >
 				</form>
 			</div>
 			

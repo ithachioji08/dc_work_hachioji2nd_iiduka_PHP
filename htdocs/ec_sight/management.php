@@ -1,8 +1,8 @@
 <?php
 // Model（model.php）を読み込む
+require_once '../../include/utility/session_management.php';
 require_once '../../include/model/ECsite_management_model.php';
 require_once '../../include/config/const.php';
-require_once 'session_after_login.php';
  
 $pdo       = get_connection();
 
@@ -19,8 +19,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_name'])) {
 
 	if($resultMessage=='OK'){
 		header("Location: management.php?regist=success");
+		exit();
 	}else{
 		header("Location: management.php?regist=".$resultMessage);
+		exit();
 	}
 }
 
@@ -60,8 +62,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['flgChange'])) {
 	$resultMessage = changeFlg($pdo,$_POST['flgChange']);
 	if($resultMessage=='OK'){
 		header("Location: management.php?update=flgSuccess");
+		exit();
 	}else{
 		header("Location: management.php?update=".$resultMessage);
+		exit();
 	}
 }
  
@@ -69,8 +73,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['stkId']) && isset($_POS
 	$resultMessage = changeStk($pdo,$_POST['stkId'],$_POST['stock']);
 	if($resultMessage=='OK'){
 		header("Location: management.php?update=stkSuccess");
+		exit();
 	}else{
 		header("Location: management.php?update=".$resultMessage);
+		exit();
 	}
 }
 
@@ -78,8 +84,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delId'])) {
 	$resultMessage = deletePdt($pdo,$_POST['delId']);
 	if($resultMessage=='OK'){
 		header("Location: management.php?update=delSuccess");
+		exit();
 	}else{
 		header("Location: management.php?update=".$resultMessage);
+		exit();
 	}
 }
 

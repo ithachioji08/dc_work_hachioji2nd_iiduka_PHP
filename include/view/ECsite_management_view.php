@@ -64,7 +64,7 @@ include "ECsite_header.php"
 				}
 			?>
 				<tr>
-					<td class="tableCell tableImage <?php print $pubClass?>">
+					<td class="tableCell tableImage <?php echo htmlspecialchars($pubClass);?>">
 						<?php $src = "../../htdocs/ec_site/img/".$row['image_id'];
 						if (file_exists($src)) {?>
 							<img src='/hachioji2/0001/ec_site/img/<?php print $row['image_id']?>'>
@@ -72,29 +72,29 @@ include "ECsite_header.php"
 							<div class="noimage"><p>no image</p></div>
 						<?php }?>
 					</td>
-					<td class="tableCell <?php print $pubClass?>">
-						<?php print $row['product_name']?>
+					<td class="tableCell <?php echo htmlspecialchars($pubClass);?>">
+						<?php echo htmlspecialchars($row['product_name'])?>
 					</td>
-					<td class="tableCell <?php print $pubClass?>">
-						￥<?php print $row['price']?>
+					<td class="tableCell <?php echo htmlspecialchars($pubClass);?>">
+						￥<?php echo htmlspecialchars($row['price']);?>
 					</td>
-					<td class="tableCell <?php print $pubClass?>">
+					<td class="tableCell <?php echo htmlspecialchars($pubClass);?>">
 						<form method ="post">
-							<input type="hidden" name="stkId" value="<?php print $row['product_id'];?>">
-							<input type="number" class='stkNum' name="stock" value="<?php print $row['stock_qty']?>">
+							<input type="hidden" name="stkId" value="<?php echo htmlspecialchars($row['product_id']);?>">
+							<input type="number" class='stkNum' name="stock" value="<?php echo htmlspecialchars($row['stock_qty']);?>">
 							<input type='submit' value="変更する">
 						</form>
 					</td>
-					<td class="tableCell <?php print $pubClass?>">
+					<td class="tableCell <?php echo htmlspecialchars($pubClass);?>">
 						<form method ="post">
-							<input type="hidden" name="flgChange" value="<?php print $row['product_id'];?>">
-							<input type='submit' value="<?php print $value;?>">
+							<input type="hidden" name="flgChange" value="<?php echo htmlspecialchars($row['product_id']);?>">
+							<input type='submit' value="<?php echo htmlspecialchars($value);?>">
 						</form>
 					</td>
-					<td class="tableCell <?php print $pubClass?>">
+					<td class="tableCell <?php echo htmlspecialchars($pubClass);?>">
 						<form method ="post">
-							<input type="hidden" name="delId" value="<?php print $row['product_id'];?>">
-							<input type='submit' value="削除する" href="management.php?delete=<?php print $row['product_id']?>">
+							<input type="hidden" name="delId" value="<?php echo htmlspecialchars($row['product_id']);?>">
+							<input type='submit' value="削除する" href="management.php?delete=<?php echo htmlspecialchars($row['product_id']);?>">
 						</form>
 					</td>
 				</tr>	

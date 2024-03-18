@@ -15,19 +15,19 @@ include "ECsite_header.php"
 	$totalprice = 0;
 	foreach ($cartData as $row) {?>
 		<div class="cartProduct">
-			<?php $src = "../../htdocs/ec_site/img/".$row['image_id'];
+			<?php $src = "../../htdocs/ec_site/img/".htmlspecialchars($row['image_id']);
 			if (file_exists($src)) {?>
-				<img class="cartImage" src='/hachioji2/0001/ec_site/img/<?php print $row['image_id']?>'>
+				<img class="cartImage" src='/hachioji2/0001/ec_site/img/<?php print htmlspecialchars($row['image_id']);?>'>
 			<?php }else{?>
 				<div class="noimage"><p>no image</p></div>
 			<?php }?>
 			
-			<p class="cartName"><?php print $row['product_name'];?></p>
-			<p class="cartPrice">価格:￥<?php print $row['price'];?></p>
-			<p class="cartCount">数量:<?php print $row['product_qty'];?></p>
+			<p class="cartName"><?php print htmlspecialchars($row['product_name']);?></p>
+			<p class="cartPrice">価格:￥<?php print htmlspecialchars($row['price']);?></p>
+			<p class="cartCount">数量:<?php print htmlspecialchars($row['product_qty']);?></p>
 		</div>
 	<?php 
-		$totalprice += $row['price'] * $row['product_qty'];
+		$totalprice += htmlspecialchars($row['price']) * htmlspecialchars($row['product_qty']);
 	}
 	?>
 </div>

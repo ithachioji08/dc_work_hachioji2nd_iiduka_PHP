@@ -1,8 +1,8 @@
 <?php
 // Model（model.php）を読み込む
+require_once '../../include/utility/session_management.php';
 require_once '../../include/model/ECsite_catalog_model.php';
 require_once '../../include/config/const.php';
-require_once 'session_after_login.php';
 
 $pdo         = get_connection();
 
@@ -13,8 +13,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['productId'])) {
 
 	if($resultMessage=='OK'){
 		header("Location: catalog.php?insert=success");
+		exit();
 	}else{
 		header("Location: catalog.php?insert=".$resultMessage);
+		exit();
 	}
 }
 

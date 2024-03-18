@@ -1,8 +1,8 @@
 <?php
 // Model（model.php）を読み込む
+require_once '../../include/utility/session_management.php';
 require_once '../../include/model/ECsite_purchase_complete_model.php';
 require_once '../../include/config/const.php';
-require_once 'session_after_login.php';
 
 $pdo      = get_connection();
 
@@ -12,11 +12,6 @@ if(count($cartData) > 0){
 	deleteCart($pdo,$_COOKIE['userid']);
 	reduceStock($pdo,$cartData);
 	$cartStrings = convertString($cartData);
-	setcookie('id',$cartStrings['id']);
-	setcookie('name',$cartStrings['name']);
-	setcookie('price',$cartStrings['price']);
-	setcookie('qty',$cartStrings['qty']);
-	setcookie('img',$cartStrings['img']);
 }else{
 	$cartData = convertArray($_COOKIE['id'],$_COOKIE['name'],$_COOKIE['price'],$_COOKIE['qty'],$_COOKIE['img']);
 }
